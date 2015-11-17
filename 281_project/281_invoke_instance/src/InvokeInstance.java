@@ -31,7 +31,7 @@ public class InvokeInstance {
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
 
-		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("AKIAI32NAJBWBXFWKXPQ", "fbQTu9ERdPKdkKFycmnDIgMpQ2ziphaiFIHjXUw6"));
+		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("your access key", "your secret key"));
 		
 		amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com");
 		/*List <String>name=new ArrayList<String>();
@@ -49,7 +49,7 @@ public class InvokeInstance {
 		                   .withInstanceType("t2.micro")
 		                   .withMinCount(1)
 		                   .withMaxCount(1)
-		                   .withKeyName("Hello_281")
+		                   .withKeyName("your keypair")
 		                   .withSecurityGroups("launch-wizard-1");
 		                   //.withSecurityGroups("JavaSecurityGroup");
 		
