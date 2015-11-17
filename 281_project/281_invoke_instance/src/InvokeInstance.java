@@ -17,14 +17,16 @@ import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
 import com.amazonaws.services.ec2.model.CreateTagsRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.IpPermission;
 import com.amazonaws.services.ec2.model.KeyPair;
+import com.amazonaws.services.ec2.model.Reservation;
 import com.amazonaws.services.ec2.model.RunInstancesRequest;
 import com.amazonaws.services.ec2.model.RunInstancesResult;
 
 public class InvokeInstance {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
@@ -54,10 +56,13 @@ public class InvokeInstance {
 		
 			  
 		RunInstancesResult runInstancesResult = amazonEC2Client.runInstances(runInstancesRequest);
+	
+		System.out.println(runInstancesResult.toString() + "\n");
 		
 		DescribeInstancesRequest ir=new DescribeInstancesRequest();
 		ir.withInstanceIds(runInstancesResult.getReservation().getInstances().get(0).getInstanceId());
 	
+		
 		DescribeInstancesResult ires=amazonEC2Client.describeInstances(ir);
 		
 		//	createTagsRequest.withResources(runInstancesResult.getReservation().getInstances().get(0).getInstanceId()).setTags("Name", "TestInstance");
@@ -73,6 +78,19 @@ public class InvokeInstance {
 		*/
 		InvokeInstance ii = new InvokeInstance();
 		
+		String state=ires.getReservations().get(0).getInstances().get(0).getState().getName().toString();
+		
+		System.out.println("state is: "+state);
+		
+		while(!state.equals("running")){
+			//if(ires.getReservations().get(0).getInstances().get(0).getState().getName().toString()!="pending"){
+				//break;
+			//}
+			ires=amazonEC2Client.describeInstances(ir);
+			state=ires.getReservations().get(0).getInstances().get(0).getState().getName().toString();
+			System.out.println("Running state is: "+state);
+			Thread.sleep(2000);
+		}
 		ii.dbOperation(ires);
 	}
 
@@ -82,13 +100,24 @@ public class InvokeInstance {
 		
 		DBInsert dbi=new DBInsert();
 		
+		//Reservation res=new Reservation();
+		
+		System.out.println("ires = \n"+ires.toString());
+		
+		//System.out.println("res.getinstance"+res.getInstances().toString());
+		
+		while(true){
+			if(ires.getReservations().get(0).getInstances().get(0).getState().getName().toString()!="pending"){
+				break;
+			}
+		}
 		System.out.println(ires.getReservations().get(0).getInstances().get(0).getPublicIpAddress().toString());
 		
 		dbi.setGroupId(ires.getReservations().get(0).getInstances().get(0).getSecurityGroups().get(0).getGroupId().toString());
 
 		dbi.setGroupName(ires.getReservations().get(0).getInstances().get(0).getSecurityGroups().get(0).getGroupName().toString());
 		
-		dbi.setPublicIpAddress(ires.getReservations().get(0).getInstances().get(0).toString());
+		dbi.setPublicIpAddress(ires.getReservations().get(0).getInstances().get(0).getPublicIpAddress().toString());
 		//.get(0).getPublicIpAddress().toString());
 		
 		dbi.setInstanceId(ires.getReservations().get(0).getInstances().get(0).getInstanceId().toString());
@@ -107,14 +136,14 @@ public class InvokeInstance {
 		
 		dbi.setStatus("Active");
 		
-		String query="INSERT INTO instance_info ('InstanceId',"+
-				"'OwnerId','ImageId','KeyName','InstanceType','VpcId','PublicIpAddress','PrivateIpAddress',"+
-				"'GroupId','GroupName','Status') VALUES ('"+dbi.getInstanceId()+"','"+dbi.getOwnerId()+"','"+
+		String query="INSERT INTO instance_info (InstanceId,"+
+				"OwnerId,ImageId,KeyName,InstanceType,VpcId,PublicIpAddress,PrivateIpAddress,"+
+				"GroupId,GroupName,Status) VALUES ('"+dbi.getInstanceId()+"','"+dbi.getOwnerId()+"','"+
 				dbi.getImageId()+"','"+dbi.getKeyName()+"','"+dbi.getInstanceType()+"','"+dbi.getVpcId()+
 				"','"+dbi.getPublicIpAddress()+"','"+dbi.getPrivateIpAddress()+"','"+dbi.getGroupId()+"','"+
-				dbi.getGroupName()+"','"+dbi.getStatus()+"'";	
+				dbi.getGroupName()+"','"+dbi.getStatus()+"')";	
 		
-		if(db.insert(query)){
+		if(!(db.insert(query))){
 			System.out.println("insert successful");
 			System.out.println("query was: \n"+query);
 		}
