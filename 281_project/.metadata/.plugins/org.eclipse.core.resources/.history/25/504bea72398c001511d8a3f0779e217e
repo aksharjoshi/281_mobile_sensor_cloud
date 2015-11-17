@@ -1,0 +1,65 @@
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.dynamodbv2.datamodeling.KeyPair;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairResult;
+import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
+import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
+import com.amazonaws.services.ec2.model.IpPermission;
+import com.amazonaws.services.ec2.model.KeyPair;
+
+public class InvokeInstance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
+
+		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJAERF2HQJYIPNHBA", "U7eigJnJWwQ2U3eBZT0v21uHnRM+9lOXWCojll+x"));
+		
+		amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com");
+		
+		CreateSecurityGroupRequest csgr = new CreateSecurityGroupRequest();
+    	
+		csgr.withGroupName("JavaSecurityGroup").withDescription("My security group");
+		
+		//CreateSecurityGroupRequest createSecurityGroupRequest;
+
+		CreateSecurityGroupResult createSecurityGroupResult = 
+				  amazonEC2Client.createSecurityGroup(csgr);
+		
+		IpPermission ipPermission = 
+				new IpPermission();
+			    	
+		ipPermission.withIpRanges("111.111.111.111/32", "150.150.150.150/32")
+			            .withIpProtocol("tcp")
+			            .withFromPort(22)
+			            .withToPort(22);
+			
+		AuthorizeSecurityGroupIngressRequest authorizeSecurityGroupIngressRequest =
+				new AuthorizeSecurityGroupIngressRequest();
+			    	
+		authorizeSecurityGroupIngressRequest.withGroupName("JavaSecurityGroup")
+			                                    .withIpPermissions(ipPermission);	
+		
+		amazonEC2Client.authorizeSecurityGroupIngress(authorizeSecurityGroupIngressRequest);
+		
+		CreateKeyPairRequest createKeyPairRequest = new CreateKeyPairRequest();
+
+		createKeyPairRequest.withKeyName("281project_demo");
+		
+		CreateKeyPairResult createKeyPairResult =  amazonEC2Client.createKeyPair(createKeyPairRequest);
+
+		com.amazonaws.services.dynamodbv2.datamodeling.KeyPair keyPair = new KeyPair();
+
+		keyPair = createKeyPairResult.getKeyPair();
+
+		String privateKey = keyPair.getKeyMaterial();
+	}
+
+}

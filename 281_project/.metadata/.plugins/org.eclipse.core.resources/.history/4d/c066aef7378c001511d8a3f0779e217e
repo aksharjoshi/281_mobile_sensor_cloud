@@ -1,0 +1,20 @@
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+
+public class InvokeInstance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
+
+		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJAERF2HQJYIPNHBA", "U7eigJnJWwQ2U3eBZT0v21uHnRM+9lOXWCojll+x"));
+		
+		System.out.println((amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com")));
+	}
+
+}

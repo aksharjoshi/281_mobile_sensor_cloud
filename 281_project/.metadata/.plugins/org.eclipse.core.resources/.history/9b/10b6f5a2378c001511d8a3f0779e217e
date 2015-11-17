@@ -1,0 +1,15 @@
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+
+public class InvokeInstance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
+
+		amazonEC2Client = new AmazonEC2Client(credentials);
+	}
+
+}

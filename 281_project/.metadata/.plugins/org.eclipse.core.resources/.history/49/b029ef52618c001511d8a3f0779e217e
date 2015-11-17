@@ -1,0 +1,24 @@
+
+public class DBConnect {
+	
+	public void conect(){
+		String jdbcUrl = "jdbc:mysql://" + "DB281" + ":" +
+			    "3306" + "/" + "DB281" + "?user=" + "DB281" + "&password=" + "pankajsingh";
+			  
+			  // Load the JDBC driver
+		try {
+		    System.out.println("Loading driver...");
+		    Class.forName("com.mysql.jdbc.Driver");
+		    System.out.println("Driver loaded!");
+		} 
+		catch (ClassNotFoundException e) {
+			throw new RuntimeException("Cannot find the driver in the classpath!", e);
+		}
+			  
+	}
+
+	public static void main(String args[]){
+		DBConnect db=new DBConnect();
+		db.conect();
+	}
+}

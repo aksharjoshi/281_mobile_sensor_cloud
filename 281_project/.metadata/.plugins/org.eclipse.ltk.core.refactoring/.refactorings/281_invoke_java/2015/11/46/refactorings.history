@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Move &apos;META-INF, src, build.properties, LICENSE.txt, NOTICE.txt, pom.xml&apos; to &apos;281_invoke_java&apos;" description="Move 6 resources to &apos;281_invoke_java&apos;" destination="/281_invoke_java" element1="aws-sdk-for-java-master/META-INF" element2="aws-sdk-for-java-master/src" element3="aws-sdk-for-java-master/build.properties" element4="aws-sdk-for-java-master/LICENSE.txt" element5="aws-sdk-for-java-master/NOTICE.txt" element6="aws-sdk-for-java-master/pom.xml" flags="7" id="org.eclipse.ltk.core.refactoring.move.resources" resources="6" stamp="1447542331324" updateReferences="true"/>
+</session>

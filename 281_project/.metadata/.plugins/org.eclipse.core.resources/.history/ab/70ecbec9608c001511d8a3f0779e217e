@@ -1,0 +1,12 @@
+
+public class DBInsert {
+
+	String InstanceId, OwnerId, ImageId, KeyName, InstanceType, VpcId, MacAddress, PublicIpAddress, PrivateIpAddress, GroupId, GroupName;
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

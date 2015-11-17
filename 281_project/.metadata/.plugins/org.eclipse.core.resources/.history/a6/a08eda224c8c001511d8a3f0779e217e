@@ -1,0 +1,8 @@
+
+public class DBConnect {
+	
+	public void conect(){
+		
+	}
+
+}

@@ -1,0 +1,18 @@
+
+public class DBConnect {
+	
+	public void conect(){
+		String jdbcUrl = "jdbc:mysql://" + "MobileSensorDB" + ":" +
+			    "3302" + "/" + "MobileSensorDB" + "?user=" + "MobileSensorDB" + "&password=" + "MobileSensorDB";
+			  
+			  // Load the JDBC driver
+			  try {
+			    System.out.println("Loading driver...");
+			    Class.forName("com.mysql.jdbc.Driver");
+			    System.out.println("Driver loaded!");
+			  } catch (ClassNotFoundException e) {
+			    throw new RuntimeException("Cannot find the driver in the classpath!", e);
+			  }
+	}
+
+}

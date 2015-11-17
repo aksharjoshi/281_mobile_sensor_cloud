@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.autoscaling.model.Tag;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairResult;
+import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
+import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
+import com.amazonaws.services.ec2.model.CreateTagsRequest;
+import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
+import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.IpPermission;
+import com.amazonaws.services.ec2.model.KeyPair;
+import com.amazonaws.services.ec2.model.RunInstancesRequest;
+import com.amazonaws.services.ec2.model.RunInstancesResult;
+
+public class InvokeInstance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
+
+		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJHEL4MLCNCDCRJIQ", "cVdp6+T7Z4TCjJHJQk4eXaei8p1Cl/23fS8cSsVO"));
+		
+		amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com");
+		/*List <String>name=new ArrayList<String>();
+		List <String>value=new ArrayList<String>();
+		
+		CreateTagsRequest createTagsRequest=new CreateTagsRequest();
+		
+		amazonEC2Client.createTags(createTagsRequest);
+		*/
+		
+		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
+			        	
+		
+		runInstancesRequest.withImageId("ami-12203173")
+		                   .withInstanceType("t2.micro")
+		                   .withMinCount(1)
+		                   .withMaxCount(1)
+		                   .withKeyName("MobileSensorKey1")
+		                   .withSecurityGroups("launch-wizard-2");
+		                   //.withSecurityGroups("JavaSecurityGroup");
+		
+		
+			  
+		RunInstancesResult runInstancesResult = amazonEC2Client.runInstances(runInstancesRequest);
+		
+		DescribeInstancesRequest ir=new DescribeInstancesRequest();
+		ir.withInstanceIds(runInstancesResult.getReservation().getInstances().get(0).getInstanceId());
+	
+		DescribeInstancesResult ires=amazonEC2Client.describeInstances(ir);
+		
+		//	createTagsRequest.withResources(runInstancesResult.getReservation().getInstances().get(0).getInstanceId()).setTags("Name", "TestInstance");
+		System.out.println(runInstancesResult.toString());
+		System.out.println("\n"+ires.getReservations().get(2).getInstances().get(4).toString());
+		
+		//DBConnect db=new DBConnect();
+		//db.conect();
+		
+			  
+	}
+
+}

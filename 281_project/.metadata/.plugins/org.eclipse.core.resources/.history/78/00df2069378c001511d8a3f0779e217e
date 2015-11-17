@@ -1,0 +1,12 @@
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+
+public class InvokeInstance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AWSCredentials credentials = new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
+
+	}
+
+}

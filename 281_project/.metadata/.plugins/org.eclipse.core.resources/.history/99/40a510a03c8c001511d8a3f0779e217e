@@ -1,0 +1,80 @@
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.AuthorizeSecurityGroupIngressRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairRequest;
+import com.amazonaws.services.ec2.model.CreateKeyPairResult;
+import com.amazonaws.services.ec2.model.CreateSecurityGroupRequest;
+import com.amazonaws.services.ec2.model.CreateSecurityGroupResult;
+import com.amazonaws.services.ec2.model.IpPermission;
+import com.amazonaws.services.ec2.model.KeyPair;
+import com.amazonaws.services.ec2.model.RunInstancesRequest;
+import com.amazonaws.services.ec2.model.RunInstancesResult;
+
+public class InvokeInstance {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
+				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
+
+		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJHEL4MLCNCDCRJIQ", "cVdp6+T7Z4TCjJHJQk4eXaei8p1Cl/23fS8cSsVO"));
+		
+		amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com");
+		
+		/*CreateSecurityGroupRequest csgr = new CreateSecurityGroupRequest();
+    	
+		csgr.withGroupName("JavaSecurityGroup").withDescription("My security group");
+		
+		//CreateSecurityGroupRequest createSecurityGroupRequest;
+
+		CreateSecurityGroupResult createSecurityGroupResult = 
+				  amazonEC2Client.createSecurityGroup(csgr);
+		
+		IpPermission ipPermission = 
+				new IpPermission();
+			    	
+		ipPermission.withIpRanges("111.111.111.111/32", "150.150.150.150/32")
+			            .withIpProtocol("tcp")
+			            .withFromPort(22)
+			            .withToPort(22);
+			
+		AuthorizeSecurityGroupIngressRequest authorizeSecurityGroupIngressRequest =
+				new AuthorizeSecurityGroupIngressRequest();
+			    	
+		authorizeSecurityGroupIngressRequest.withGroupName("JavaSecurityGroup")
+			                                    .withIpPermissions(ipPermission);	
+		
+		amazonEC2Client.authorizeSecurityGroupIngress(authorizeSecurityGroupIngressRequest);
+		*/
+		CreateKeyPairRequest createKeyPairRequest = new CreateKeyPairRequest();
+
+		createKeyPairRequest.withKeyName("281_project_demo2");
+		
+		CreateKeyPairResult createKeyPairResult =  amazonEC2Client.createKeyPair(createKeyPairRequest);
+
+		KeyPair keyPair = new KeyPair();
+
+		keyPair = createKeyPairResult.getKeyPair();
+
+		String privateKey = keyPair.getKeyMaterial();
+		
+		
+		RunInstancesRequest runInstancesRequest = 
+				  new RunInstancesRequest();
+			        	
+		runInstancesRequest.withImageId("ami-12203173")
+		                   .withInstanceType("t2.micro")
+		                   .withMinCount(1)
+		                   .withMaxCount(1)
+		                   .withKeyName("281_project_demo2");
+		                   //.withSecurityGroups("JavaSecurityGroup");
+			  
+		RunInstancesResult runInstancesResult = amazonEC2Client.runInstances(runInstancesRequest);
+			  
+	}
+
+}

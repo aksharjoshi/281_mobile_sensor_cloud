@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">&#x0A;<refactoring comment="Rename resource &apos;281_spot_instance&apos; to &apos;281_invoke_instance&apos;" description="Rename resource &apos;281_spot_instance&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="/281_spot_instance" name="281_invoke_instance" stamp="1447663101785" updateReferences="true"/>&#x0A;<refactoring comment="Delete resource &apos;281_invoke_java&apos;" deleteContents="true" description="Delete resource &apos;281_invoke_java&apos;" element1="/281_invoke_java" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1447663123232"/>
+</session>
