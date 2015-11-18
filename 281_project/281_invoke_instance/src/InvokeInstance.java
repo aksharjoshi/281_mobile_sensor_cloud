@@ -31,7 +31,9 @@ public class InvokeInstance {
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));
 
-		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("your access key", "your secret key"));
+		AmazonEC2 amazonEC2Client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJHEL4MLCNCDCRJIQ", "cVdp6+T7Z4TCjJHJQk4eXaei8p1Cl/23fS8cSsVO"));
+		
+		//new AmazonEC2Client(new BasicAWSCredentials("AKIAI32NAJBWBXFWKXPQ", "fbQTu9ERdPKdkKFycmnDIgMpQ2ziphaiFIHjXUw6"));
 		
 		amazonEC2Client.setEndpoint("ec2.us-west-2.amazonaws.com");
 		/*List <String>name=new ArrayList<String>();
@@ -45,12 +47,14 @@ public class InvokeInstance {
 		RunInstancesRequest runInstancesRequest = new RunInstancesRequest();
 			        	
 		
-		runInstancesRequest.withImageId("ami-12203173")
+		runInstancesRequest.withImageId("ami-a6b3a2c7")
 		                   .withInstanceType("t2.micro")
 		                   .withMinCount(1)
 		                   .withMaxCount(1)
-		                   .withKeyName("your keypair")
-		                   .withSecurityGroups("launch-wizard-1");
+		                   .withKeyName("MobileSensorKey1")
+		                   //.withKeyName("Hello_281")
+		                   .withSecurityGroups("launch-wizard-2");
+		                   //.withSecurityGroups("launch-wizard-1");
 		                   //.withSecurityGroups("JavaSecurityGroup");
 		
 		
@@ -89,7 +93,7 @@ public class InvokeInstance {
 			ires=amazonEC2Client.describeInstances(ir);
 			state=ires.getReservations().get(0).getInstances().get(0).getState().getName().toString();
 			System.out.println("Running state is: "+state);
-			Thread.sleep(2000);
+			Thread.sleep(5000);
 		}
 		ii.dbOperation(ires);
 	}

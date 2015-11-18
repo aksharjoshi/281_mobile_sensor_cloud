@@ -20,30 +20,43 @@ public class DBConnect {
 		    System.out.println("Loading driver...");
 		    Class.forName("com.mysql.jdbc.Driver");
 		    System.out.println("Driver loaded!");
+		    
+		    conn = DriverManager.getConnection(jdbcUrl,"DB281","pankajsingh");
+			setupStatement = conn.createStatement();
+			
 		} 
-		catch (ClassNotFoundException e) {
+		catch (Exception e) {
 			throw new RuntimeException("Cannot find the driver in the classpath!", e);
-		}
-			  
+		}  
 	}
 	
 	public boolean insert(String query){
 		boolean update=false;
-		try {
-			conn = DriverManager.getConnection(jdbcUrl,"DB281","pankajsingh");
-			setupStatement = conn.createStatement();
-			
+		try {	
 			update=setupStatement.execute(query);
 			
 			return update;
-		} catch (SQLException e) {
+		} 
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return update;
 		}
-	    
-	    // Create a table and write two rows
-	    
+	}
+	
+	public ResultSet select(String query){
+		ResultSet result=null;
+		try {
+			
+			result = setupStatement.executeQuery(query);
+			
+			return result;
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result;
+		}
 	}
 
 	/*public static void main(String args[]){
