@@ -1,3 +1,4 @@
+package com.instance;
 import java.sql.*;
 
 public class DBConnect {

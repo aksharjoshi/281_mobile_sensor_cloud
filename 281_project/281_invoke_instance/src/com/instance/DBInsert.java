@@ -1,3 +1,4 @@
+package com.instance;
 
 public class DBInsert {
 
