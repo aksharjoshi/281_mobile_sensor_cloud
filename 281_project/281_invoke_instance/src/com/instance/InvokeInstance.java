@@ -28,6 +28,8 @@ import com.amazonaws.services.ec2.model.RunInstancesResult;
 public class InvokeInstance {
 
 	public static void main(String[] args) throws InterruptedException {
+		
+	
 		// TODO Auto-generated method stub
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 				//new PropertiesCredentials(AwsConsoleApp.class.getResourceAsStream("credentials"));

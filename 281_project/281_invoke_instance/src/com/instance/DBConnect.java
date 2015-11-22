@@ -14,7 +14,7 @@ public class DBConnect {
 	
 	
 	public void conect(){
-		jdbcUrl = "jdbc:mysql://db281.clrlbs6tldgl.us-west-2.rds.amazonaws.com:3306/DB281";// + "?user=" + "DB281" + "&password=" + "pankajsingh";
+		jdbcUrl = "jdbc:mysql://sql3.freemysqlhosting.net/sql397168";// + "?user=" + "DB281" + "&password=" + "pankajsingh";
 			  
 		// Load the JDBC driver
 		try {
@@ -22,9 +22,9 @@ public class DBConnect {
 		    Class.forName("com.mysql.jdbc.Driver");
 		    System.out.println("Driver loaded!");
 		    
-		    conn = DriverManager.getConnection(jdbcUrl,"DB281","pankajsingh");
+		    conn = DriverManager.getConnection(jdbcUrl,"sql397168","uH2!uF9*");
 			setupStatement = conn.createStatement();
-			
+			///kYan gayo???
 		} 
 		catch (Exception e) {
 			throw new RuntimeException("Cannot find the driver in the classpath!", e);
@@ -60,6 +60,24 @@ public class DBConnect {
 		}
 	}
 
+	public ResultSet execute(String query){
+		ResultSet result=null;
+		try {
+			
+			result = setupStatement.executeQuery(query);
+			
+			return result;
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return result;
+		}
+	}
+	
+	
+	
+	
 	/*public static void main(String args[]){
 		DBConnect db=new DBConnect();
 		db.conect();

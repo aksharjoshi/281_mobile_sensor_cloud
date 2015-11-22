@@ -1,13 +1,16 @@
+package com.resourceallocate;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
-
+import com.instance.*;
 
 public class ResourceAlocation {
 
 	
-	public void selectResource() {
+	public static void main(String [] argsv) {
 		try {
+		
 		DBConnect db =new DBConnect();
 		db.conect();
 	
