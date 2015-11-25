@@ -42,14 +42,12 @@
   						<p><br/></p>	
   							<p> Not a member? <a href="SignUp.jsp">Register Here</a> <span class="glyphicon glyphicon-arrow-right"></span></p>
 						<p><br/></p>
-						
 						</form>
   					</div>
 				</div>
   			</div>
 		</div>
     </div>
-
 
 
 </body>
