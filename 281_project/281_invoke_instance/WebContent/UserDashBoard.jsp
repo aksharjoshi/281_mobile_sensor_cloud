@@ -160,7 +160,7 @@
                         <a href="htmls/charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                     </li>
                     <li>
-                        <a href="htmls/tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
+                        <a href="http://localhost:8080/281_invoke_instance/BillingSummury.jsp"><i class="fa fa-fw fa-table"></i>Billing</a>
                     </li>
                     <li>
                         <a href="htmls/forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>

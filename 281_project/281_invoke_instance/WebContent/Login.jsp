@@ -48,7 +48,12 @@
   			</div>
 		</div>
     </div>
-
-
+<script type="text/javascript">
+var msg =${alertm}; 
+	alert(msg);
+if(msg.length){
+	alert(msg);
+}
+</script>
 </body>
 </html>

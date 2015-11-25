@@ -3,12 +3,13 @@ package com.login;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import com.instance.*;
 
 public class Login extends HttpServlet {
@@ -28,6 +29,7 @@ public class Login extends HttpServlet {
 		db.conect();
 		String query = "Select username,password from user_details_tbl";
 		ResultSet rs = db.execute(query);
+		HttpSession session = req.getSession();
 		
 		RequestDispatcher rd = req.getRequestDispatcher("Login.jsp");
 		RequestDispatcher rd1 = req.getRequestDispatcher("UserDashBoard.jsp");
@@ -53,15 +55,18 @@ public class Login extends HttpServlet {
 					if((rs.getString("username").equals(req.getParameter("Username"))) && (rs.getString("password").equals(req.getParameter("Password")))){
 						
 						req.setAttribute("Username", rs.getString("username"));
+						session.setAttribute("Username",rs.getString("username"));
 						rd1.forward(req, resp);
 						break;
 					}
 					
 					else{
 						
-						req.setAttribute("alert","Wrong Username or Password");
+						req.setAttribute("alertm","Wrong Username or Password");
 						req.setAttribute("count",1);
+						
 						rd.forward(req, resp);
+						
 						break;
 					}
 					
