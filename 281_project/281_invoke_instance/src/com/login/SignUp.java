@@ -33,22 +33,31 @@ public class SignUp extends HttpServlet {
 		
 		
 		int count=0;
+		String phone=null;
+		String firstName = null;
+		String lastName= null;
+		String userName=null;
+		String password=null;
+		String city=null;
+		String country=null;
+		String state=null;
 		
-		String firstName=req.getParameter("FirstName");
-
-		String lastName=req.getParameter("LastName");
-
-		String userName=req.getParameter("UserName");
-
-		String password=req.getParameter("Password");
 		
-		int phone = Integer.parseInt(req.getParameter("Phone"));
+		firstName=req.getParameter("FirstName");
+
+	    lastName=req.getParameter("LastName");
+
+	    userName=req.getParameter("UserName");
+
+	    password=req.getParameter("Password");
 		
-		String city=req.getParameter("City");
+	    phone = req.getParameter("Phone");
+		
+	    city=req.getParameter("City");
 
-		String state=req.getParameter("State");
+		state=req.getParameter("State");
 
-		String country=req.getParameter("Country");
+		country=req.getParameter("Country");
 	
 		String query="INSERT INTO user_details_tbl (firstname,lastname,username,password,phone_number,city,state,country)"+
 				" VALUES ('"+firstName+"','"+
