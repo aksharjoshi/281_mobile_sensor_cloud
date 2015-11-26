@@ -30,15 +30,12 @@ public class Login extends HttpServlet {
 		String query = "Select username,password from user_details_tbl";
 		ResultSet rs = db.execute(query);
 		HttpSession session = req.getSession();
-		
-		RequestDispatcher rd = req.getRequestDispatcher("Login.jsp");
-		RequestDispatcher rd1 = req.getRequestDispatcher("UserDashBoard.jsp");
 	
 		String Username=req.getParameter("Username");
 
 		String Password=req.getParameter("Password");
 		
-
+		boolean userFound=false;
 	
 		if (Username.equals("admin@admin.com") && Password.equals("admin"))
 		{
@@ -47,41 +44,32 @@ public class Login extends HttpServlet {
 			
 		else
 		{
-		
 			try {
 				
 				while(rs.next()){				
 					
-					if((rs.getString("username").equals(req.getParameter("Username"))) && (rs.getString("password").equals(req.getParameter("Password")))){
-						
+					if((rs.getString("username").equals(req.getParameter("Username"))) && (rs.getString("password").equals(req.getParameter("Password"))))
+					{
 						req.setAttribute("Username", rs.getString("username"));
 						session.setAttribute("Username",rs.getString("username"));
-						rd1.forward(req, resp);
+						userFound=true;
 						break;
 					}
-					
-					else{
-						
-						req.setAttribute("alertm","Wrong Username or Password");
-						req.setAttribute("count",1);
-						
-						rd.forward(req, resp);
-						
-						break;
-					}
-					
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
-		
+	
 		}
 			
-	
+		RequestDispatcher rd;
+		if(userFound)
+			 rd= req.getRequestDispatcher("UserDashBoard.jsp");
+		else
+			rd= req.getRequestDispatcher("Login.jsp");
 		
-		
+		rd.forward(req, resp);
 		
 	}
 	
