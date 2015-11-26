@@ -3,10 +3,11 @@ package com.sensor;
 import java.io.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.Random;
 import com.instance.*;
 
-public class Sensor {
+public class SensorCreation {
 
 	public static final void main(String... aArgs) throws IOException{
 		System.out.println("Generating 10 random integers in range 0..99.");
@@ -18,7 +19,10 @@ public class Sensor {
 	      System.out.println("Generated : " + randomInt);
 	    //}	    
 	      
-	    String content = "Sensor_id\tData\n\t\t1\t"+randomInt;
+	    Date time=new Date();
+	    String timestamp=time.getTime()+"";
+	    
+	    String content = "\n\t\t2\t"+randomInt+"\t"+timestamp;
 
 		File file = new File("./sensor.log");
 
@@ -27,12 +31,16 @@ public class Sensor {
 			file.createNewFile();
 		}
 
-		FileWriter fw = new FileWriter(file.getAbsoluteFile());
-		BufferedWriter bw = new BufferedWriter(fw);
-		bw.write(content);
 		
-		bw.close();
-
+		PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter("./sensor.log", true)));
+				
+		//FileWriter fw = new FileWriter("./sensor.log");
+		//BufferedWriter bw = new BufferedWriter(fw);
+		out.write(content);
+		
+		//bw.close();
+		out.close();
+		
 		System.out.println("Done");
 			
 			
@@ -41,7 +49,7 @@ public class Sensor {
 	    DBConnect db=new DBConnect();
 	    db.conect();
 	    
-	    String query="Select * from DB281.Sensor_id";
+	    String query="Select * from Sensor_id";
 	    
 	    ResultSet res=db.select(query);
 	    int id=0;
@@ -52,8 +60,9 @@ public class Sensor {
 	    	}
 	    	int old_id=id;
 	    	id++;
-	    	
+	    	//String queryAdd="insert into sensor_info"
 	    	query="update Sensor_id set sensor_count_id="+id+" where sensor_count_id="+old_id;
+	    	
 	    	
 	    	if(!(db.insert(query))){
 	    		System.out.println("count updated");
